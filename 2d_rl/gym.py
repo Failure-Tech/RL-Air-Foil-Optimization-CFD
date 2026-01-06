@@ -8,6 +8,11 @@ Information: current airfoil + airfoil metrics
 Actions: generate 3 floats [m, p, t], with c=1 appended each time
 Success: when metrics are optimal
 End: time limit
+
+
+FIX Environment:
+3 discrete actions (change 1, 2, or 3 variables)
+let the agent decide what number it should be between 0 and 1
 """
 
 import gymnasium as gym
