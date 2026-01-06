@@ -23,28 +23,25 @@ class AirfoilGym(gym.Env):
     def __init__(self, airfoil: Optional[any]):
         # super.__init__(AirfoilGym, self)
         # intialize states [m, p, t, c]
-        self._agent_params = np.array(-0.1)*4
-        self._airfoil = None
+        # generate 3 float values in continuous action space
+        # self.action_space = gym.spaces.Box(0, 1, shape=(3,), dtype=np.float64)
+        self.action_space = gym.spaces.Tuple(
+            gym.spaces.Discrete(3),
+            gym.spaces.Box(low=0.0, high=1.0, shape=(3,), dtype=np.float64)
+        )
 
         # treating obs_space as state_space => 3 random floats + 1.0 for c at the end
-        self.observation_space = gym.spaces.Dict(
-            {
-                "agent_params": np.append(gym.spaces.Box(0, 1, shape=(3,), dtype=np.float64), 1.0),
-                "airfoil": airfoil if not None else None
-            }
-        )
-        # generate 3 float values in continuous action space
-        self.action_space = gym.spaces.Box(0, 1, shape=(3,), dtype=np.float64)
+        self.observation_space = gym.spaces.Box(low=-np.inf, high=np.inf, shape=(4,), dtype=np.float64)
 
-    def _get_obs(self):
-        return {
-            "agent_params": self._agent_params,
-            "airfoil": self._airfoil
-        }
+    # def _get_obs(self):
+    #     return {
+    #         "agent_params": self._agent_params,
+    #         "airfoil": self._airfoil
+    #     }
 
-    def _get_info(self):
-        "returning a dictionary "
-        pass
+    # def _get_info(self):
+    #     "returning a dictionary "
+    #     pass
 
     def reset(self, seed: Optional[int] = None, options: Optional[dict] = None):
         super().reset(seed=seed)
@@ -65,16 +62,6 @@ class AirfoilGym(gym.Env):
 
         returns (observation, reward, terminated, truncated)
         """
-        params: list = [np.random.uniform(0, 1)]
+        discrete_action, vals = action
+        discrete_action+=1 # 1, 2, or 3 vars changed
 
-        terminated = True
-
-        truncated = False
-
-        observation = self._get_obs()
-        info = self._get_info()
-
-        # change function
-        reward = 1 if terminated else 0
-
-        return observation, reward, terminated, truncated, info
