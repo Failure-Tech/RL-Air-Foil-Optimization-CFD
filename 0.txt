@@ -1,0 +1,20 @@
+- Current Object Type: 2D airfoil for symmetric baseline with NACA 0012
+- parameterizing the object via camber, thickness distrib., and leading/trailing-edge smoothness
+- AOA (Angle of Attack):-2 to +12 deg
+- 5e5 to 2e6 (sample values from Reynolds Number)
+- Mach number: fix to 0.2
+- Geometric Constraints: min thickness >= 12%
+- Leading edge radius to prevent full sharpening
+- <= 12% for trailing-edge Angle
+- hinge >= 20% chord
+- Robust vs Narrow RL: training on envelope distribution output airfoils superior to single-condition RL
+- Multifid vs Singlefid: low-fid + pretraining + high-fid fine-tuning > High-fid only (2-3x gain ideally)
+- Mechanism-informed vs Generic Representation: 
+parameterization from primitives such as camber/thickness coeffs, flap params, etc. have faster convergence
+than splines/control points under the same dimensionality for control
+
+https://pmc.ncbi.nlm.nih.gov/articles/PMC10276028/
+https://arxiv.org/html/2403.04329v1
+https://www.iieta.org/journals/mmep/paper/10.18280/mmep.120311
+https://arc.aiaa.org/doi/10.2514/1.J060189
+https://github.com/peterdsharpe/NeuralFoil

@@ -1,0 +1,4 @@
+Analysis Confidence: [5.56268465e-308]
+Lift Coefficient: [13259.86638775]
+Drag Coefficient: [inf]
+CM: [-inf]
