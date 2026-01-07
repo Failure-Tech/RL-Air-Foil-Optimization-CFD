@@ -62,8 +62,8 @@ class Env(gym.Env):
 
         truncated = False
 
-        # change reward function to match airfoil
-        reward = 1 if terminated else 0
+        # change reward function to match airfoil [cl, cd, cl/cd, analy, cm]
+        reward = 1 if terminated else ((-0.2*airfoil["CL"]/airfoil["CD"]).item() -0.2*airfoil["CL"].item() 0.2*+ airfoil["CD"].item -0.2*airfoil["analysis_confidence"].item() + 0.2*airfoil["CM"].item())
 
         observation = self._get_obs()
         info = self._get_info()
