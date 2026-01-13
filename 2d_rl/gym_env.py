@@ -1,7 +1,17 @@
 import gymnasium as gym
 import numpy as np
 from typing import Optional
+
+import os
+import sys
+
+root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+sys.path.append(root_dir)
 from cfd_aero_sim import airfoil_from_naca4
+
+from gymnasium.utils.env_checker import check_env
+from gymnasium.envs.registration import register
+from setuptools import setup
 
 class Env(gym.Env):
     def __init__(self):
@@ -71,3 +81,8 @@ class Env(gym.Env):
         info = self._get_info()
 
         return observation, reward, terminated, truncated, info
+    
+register(
+    id="cfd-v0",
+    entry_point="gym_cfd.envs:Env"
+)
